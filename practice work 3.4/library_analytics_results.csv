@@ -1,0 +1,95 @@
+﻿LIBRARY ANALYTICS REPORT
+Generated,2026-11-23 18:55:23
+Source,"In-memory SQLite database (members, books, checkouts)"
+
+SECTION,DATASET OVERVIEW
+Metric,Value
+Members,20
+Premium Members,7
+Standard Members,13
+Books,10
+Genres,3
+Total Checkouts,12
+Returned,9
+Not Yet Returned,3
+Checkout Period,2024-01-05 to 2024-02-20
+Never-Borrowed Books,0
+
+SECTION,1. Checkouts per Member (Most Active First)
+Question,"How many checkouts does each member have, most active first?"
+SQL Technique,JOIN + GROUP BY + COUNT
+Rows Returned,20
+Member,Tier,Checkouts,Not Yet Returned
+Alice,premium,4,1
+Bob,standard,3,1
+Carmen,premium,2,0
+Dev,standard,2,1
+Ella,standard,1,0
+Farid,standard,0,0
+Grace,premium,0,0
+Hiro,standard,0,0
+Isla,standard,0,0
+Jamal,premium,0,0
+Keiko,standard,0,0
+Liam,standard,0,0
+Maya,premium,0,0
+Nikolai,standard,0,0
+Olivia,standard,0,0
+Priya,premium,0,0
+Quinn,standard,0,0
+Rosa,standard,0,0
+Santiago,premium,0,0
+Tara,standard,0,0
+
+SECTION,2. Most Checked-Out Genres
+Question,Which genres are checked out most often?
+SQL Technique,JOIN + GROUP BY + COUNT
+Rows Returned,3
+Genre,Checkouts,Distinct Titles Borrowed,Distinct Borrowers
+Sci-Fi,5,4,3
+Fantasy,4,3,3
+Classic,3,3,3
+
+SECTION,3. Members with More Than 2 Checkouts
+Question,Which members have more than 2 checkouts?
+SQL Technique,GROUP BY + HAVING
+Rows Returned,2
+Member,Tier,Checkouts
+Alice,premium,4
+Bob,standard,3
+
+SECTION,4. Average Book Length per Genre
+Question,What is the average book length (pages) per genre?
+SQL Technique,GROUP BY + AVG
+Rows Returned,3
+Genre,Books,Average Pages,Shortest,Longest
+Classic,3,473.7,279,635
+Fantasy,3,385.0,183,662
+Sci-Fi,4,310.5,255,412
+
+SECTION,5. Members with Above-Average Checkouts
+Question,Which members have an above-average number of checkouts?
+SQL Technique,Subquery (compare each member to the overall average)
+Rows Returned,5
+Member,Tier,Checkouts,Average Across All Members
+Alice,premium,4,0.6
+Bob,standard,3,0.6
+Carmen,premium,2,0.6
+Dev,standard,2,0.6
+Ella,standard,1,0.6
+
+SECTION,KEY FINDINGS
+Category,Finding
+Member Activity,"Alice (premium) is the most active member with 4 checkouts, while 15 members are tied for the fewest (0). Premium members average 0.9 checkouts versus 0.5 for standard members."
+Genre Demand,"Sci-Fi leads demand with 5 checkouts (42% of all activity), and Classic trails with 3. Demand is relatively balanced across the 3 genres, so no genre is being neglected."
+High-Volume Borrowers (HAVING),"2 member(s) exceed 2 checkouts: Alice, Bob. HAVING filters groups after aggregation, which WHERE cannot do."
+Book Length by Genre (AVG),"Classic titles are the longest on average (473.7 pages), while Sci-Fi titles are the shortest (310.5 pages). The genre with the longest books is also the least borrowed, suggesting book length may modestly reduce demand."
+Above-Average Members (Subquery),"The average member has 0.6 checkouts. 5 member(s) are above average (Alice, Bob, Carmen, Dev, Ella) and account for 100% of all checkouts, showing activity is concentrated among a few readers."
+Circulation Health,9 of 12 checkouts have been returned (75% return rate); 3 items are still out. 0 book(s) have never been borrowed.
+
+SECTION,RECOMMENDATIONS
+1,"Reward highly active members (e.g., loyalty perks) to sustain engagement."
+2,Run outreach or reading challenges for low-activity members to raise the average.
+3,Use genre demand data to prioritize new acquisitions and extra copies.
+4,Promote rarely borrowed titles through displays or curated recommendation lists.
+5,Follow up on unreturned items to keep inventory available for other members.
